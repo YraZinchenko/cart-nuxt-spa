@@ -11,6 +11,8 @@
                         <div>
                             <h3 class="headline mb-0">{{ item.name }}</h3>
                             <div class="headline mb-0"> {{ item.address }} </div>
+                            <div class="headline mb-0"><span>Минимальная услуга -</span>
+                            <span>{{ getMin(i) }}</span></div>
                         </div>
                         <div class="action-section">
                             <v-card-actions>
@@ -59,6 +61,16 @@
             async getClinics() {
                 const res = await this.$axios.$get('http://212.42.46.189:11009/v1/bell');
                 this.clinics = res;
+                console.log(this.clinics);
+            },
+            getMin(key) {
+                let minimum = this.clinics[key].services[0].price;
+                this.clinics[key].services.forEach(element => {
+                    if(minimum > element.price) {
+                        minimum = element.price;
+                    }
+                });
+                return minimum;
             }
         },
         created() {
