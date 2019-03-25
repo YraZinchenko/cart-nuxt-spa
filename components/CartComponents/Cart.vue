@@ -7,7 +7,7 @@
         <div>
             <v-timeline>
                 <v-timeline-item
-                v-for="(item, key) in $store.state.cartArray"
+                v-for="(item, key) in getCart"
                 :key="key"
                 color="red lighten-2"
                 large
@@ -35,11 +35,10 @@
     export default {
         computed: {
             getFullPriсe () {
-                let fullPriсe = 0;
-                this.$store.state.cartArray.forEach(element => {
-                    fullPriсe += element.price;
-                });
-                return fullPriсe;
+                return this.$store.getters.getFullPrice;
+            },
+            getCart () {
+                return this.$store.getters.getCart;
             }
         }
     }

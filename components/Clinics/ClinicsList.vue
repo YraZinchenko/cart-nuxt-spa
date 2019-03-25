@@ -59,9 +59,8 @@
         },
         methods:{
             async getClinics() {
-                const res = await this.$axios.$get('http://212.42.46.189:11009/v1/bell');
+                let res = await this.$axios.$get('http://212.42.46.189:11009/v1/bell');
                 this.clinics = res;
-                console.log(this.clinics);
             },
             getMin(key) {
                 let minimum = this.clinics[key].services[0].price;

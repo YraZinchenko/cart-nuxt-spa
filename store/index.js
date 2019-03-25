@@ -11,18 +11,18 @@ const store = () => new Vuex.Store({
   },
   mutations: {
     addItemToCart (state, item) {
-        function formatDate(date) {
-          var dd = date.getDate();
-          if (dd < 10) dd = '0' + dd;
-          var mm = date.getMonth() + 1;
-          if (mm < 10) mm = '0' + mm;
-          var yy = date.getFullYear() % 100;
-          if (yy < 10) yy = '0' + yy;
-          return dd + '.' + mm + '.' + yy;
-        }
-        Vue.set(item, 'date', formatDate(new Date()));
-        state.cartArray.unshift(item);
-        this.commit('saveCart');
+      function formatDate(date) {
+        var dd = date.getDate();
+        if (dd < 10) dd = '0' + dd;
+        var mm = date.getMonth() + 1;
+        if (mm < 10) mm = '0' + mm;
+        var yy = date.getFullYear() % 100;
+        if (yy < 10) yy = '0' + yy;
+        return dd + '.' + mm + '.' + yy;
+      }
+      Vue.set(item, 'date', formatDate(new Date()));
+      state.cartArray.unshift(item);
+      this.commit('saveCart');
     },
     removeCart(state) {
       state.cartArray = [];
@@ -30,6 +30,18 @@ const store = () => new Vuex.Store({
     },
     saveCart(state) {
       window.localStorage.setItem('cartArray', JSON.stringify(state.cartArray));
+    }
+  },
+  getters: {
+    getFullPrice: state => {
+      let fullPriсe = 0;
+      state.cartArray.forEach(element => {
+        fullPriсe += element.price;
+      })
+      return fullPriсe;
+    },
+    getCart: state => {
+      return state.cartArray;
     }
   }
 })
